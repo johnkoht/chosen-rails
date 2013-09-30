@@ -18,6 +18,13 @@ $.fn.extend({
 })
 
 class Chosen extends AbstractChosen
+  constructor: (@form_field, @options={}) ->
+    @autoOpen = @options.autoOpen if @options.autoOpen?
+    super(@form_field, @options)
+
+  set_default_values: ->
+    @autoOpen = false unless @autoOpen?
+    super()
 
   setup: ->
     @form_field_jq = $ @form_field
@@ -162,6 +169,7 @@ class Chosen extends AbstractChosen
 
     @search_field.val(@search_field.val())
     @search_field.focus()
+    @results_show() if @autoOpen
 
 
   test_active_click: (evt) ->
